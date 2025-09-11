@@ -1,2 +1,2 @@
 # Product-Categorization
-Categorizing projects using machine learning model
+Categorizing products using machine learning model
