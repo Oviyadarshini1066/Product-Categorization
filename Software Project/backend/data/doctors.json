@@ -1,0 +1,37 @@
+[
+  {
+    "id": "fNFiCn2XtEp6",
+    "createdAt": "2025-11-06T18:14:29.583Z",
+    "name": "Deebapriya",
+    "specialty": "Cardiologist",
+    "contact": "6543643905",
+    "licenseNo": "4634634",
+    "workingDays": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "slotMinutes": 60,
+    "updatedAt": "2025-11-07T07:08:21.593Z"
+  },
+  {
+    "id": "LYqPnsLt2zy7",
+    "createdAt": "2025-11-06T18:14:56.247Z",
+    "name": "Chitra K",
+    "specialty": "Gynecologist",
+    "contact": "897427457",
+    "licenseNo": "8362735"
+  },
+  {
+    "id": "9vzk0WGSBfUB",
+    "createdAt": "2025-11-07T06:43:08.284Z",
+    "name": "Tarun Kumar",
+    "specialty": "Ophthalmologist",
+    "contact": "4567890123",
+    "licenseNo": "123536"
+  }
+]
