@@ -23,6 +23,12 @@ export default function ReportsPage() {
   async function remove(id) { try { await Reports.remove(id); await load() } catch { setError('Failed to delete') } }
   async function patch(id, patch) { try { await Reports.patch(id, patch); await load() } catch { setError('Failed to update') } }
 
+  const nameById = (list, id) => {
+    const x = list.find(i => String(i.id) === String(id))
+    return x ? (x.name || x.fullName || x.title || `#${id}`) : '(Deleted patient)'
+  }
+  const visibleReports = items.filter(r => patients.some(p => String(p.id) === String(r.patientId)))
+
   return (
     <div className="container">
       <header className="header">
@@ -55,11 +61,11 @@ export default function ReportsPage() {
         <div>
           <h3>Report List</h3>
           <ul className="list">
-            {items.map(r => (
+            {visibleReports.map(r => (
               <li key={r.id} className="list-item">
                 <div className="title"><span>{r.type}</span></div>
                 <div className="meta">
-                  {r.patientId && <span className="badge">Patient #{r.patientId}</span>}
+                  {r.patientId && <span className="badge">{nameById(patients, r.patientId)}</span>}
                   {r.date && <span className="badge">{r.date}</span>}
                   {r.summary && <span className="badge">{r.summary}</span>}
                   <button className="link" onClick={()=>patch(r.id,{ summary: prompt('Update summary', r.summary || '') || r.summary })}>Edit</button>

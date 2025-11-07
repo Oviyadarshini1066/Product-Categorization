@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "id": "xN45Qh1PPl2a",
+    "createdAt": "2025-11-07T09:29:20.619Z",
+    "name": "Paracetamol 500mg",
+    "sku": "MED001",
+    "stock": "100",
+    "unit": "strips",
+    "reorderLevel": "20",
+    "updatedAt": "2025-11-07T09:30:13.138Z"
+  },
+  {
+    "id": "3PbUUGxAjsCv",
+    "createdAt": "2025-11-07T09:30:08.342Z",
+    "name": "Amoxicillin 250mg Capsule",
+    "sku": "MED002",
+    "stock": "50",
+    "unit": "strips",
+    "reorderLevel": "10"
+  }
+]

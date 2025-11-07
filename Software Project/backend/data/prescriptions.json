@@ -1,19 +1,19 @@
 [
   {
-    "id": "6ZjO3kdYVIVL",
-    "createdAt": "2025-11-07T06:40:56.161Z",
-    "patientId": "jVPnqQqYG80T",
+    "id": "2W0Qgbzfw9Mb",
+    "createdAt": "2025-11-07T09:44:48.742Z",
+    "patientId": "IODtQ-355bi_",
     "doctorId": "fNFiCn2XtEp6",
     "medicines": [
       {
-        "name": "Dolo 650",
+        "name": "Paracetamol",
         "morning": 1,
         "afternoon": 0,
         "evening": 0,
         "night": 1
       }
     ],
-    "notes": "Take the medicine pain occurs",
+    "notes": "",
     "status": "open"
   }
 ]

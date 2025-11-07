@@ -34,10 +34,13 @@ export default function DoctorsPage() {
 
   const nameById = (list, id) => {
     const x = list.find(i => String(i.id) === String(id));
-    return x ? (x.name || x.fullName || x.title || `#${id}`) : `#${id}`
+    return x ? (x.name || x.fullName || x.title || `#${id}`) : '(Deleted patient)'
   }
 
-  const forDoctor = appointments.filter(a => String(a.doctorId) === String(selected))
+  // Only consider appointments whose patient still exists
+  const forDoctor = appointments.filter(a =>
+    String(a.doctorId) === String(selected) && patients.some(p => String(p.id) === String(a.patientId))
+  )
   const now = new Date()
   const toDate = (raw) => (raw ? new Date(raw) : null)
   const upcoming = forDoctor.filter(a => {

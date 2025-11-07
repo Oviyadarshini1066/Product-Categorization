@@ -45,6 +45,14 @@ export default function AdmissionsPage() {
     try { await map[kind].remove(id); await load() } catch { setError('Failed to delete') }
   }
 
+  const nameById = (list, id) => {
+    const x = list.find(i => String(i.id) === String(id))
+    return x ? (x.name || x.fullName || x.title || `#${id}`) : '(Deleted patient)'
+  }
+  const visibleAdmissions = admissions.filter(a => patients.some(p => String(p.id) === String(a.patientId)))
+  const visibleTransfers = transfers.filter(t => patients.some(p => String(p.id) === String(t.patientId)))
+  const visibleDischarges = discharges.filter(d => patients.some(p => String(p.id) === String(d.patientId)))
+
   return (
     <div className="container">
       <header className="header">
@@ -116,39 +124,39 @@ export default function AdmissionsPage() {
           <div className="card" style={{ marginBottom: 12 }}>
             <h3 className="page-title">Recent Admissions</h3>
             <ul className="list">
-              {admissions.map(a=> (
+              {visibleAdmissions.map(a=> (
                 <li key={a.id} className="list-item">
-                  <div className="title"><span>Patient #{a.patientId}</span></div>
+                  <div className="title"><span>{nameById(patients, a.patientId)}</span></div>
                   <div className="meta"><span className="badge">Ward {a.ward}</span><button className="link" onClick={()=>removeOne('admissions', a.id)}>Delete</button></div>
                 </li>
               ))}
-              {admissions.length===0 && <li className="list-item"><div className="title"><span className="muted">No admissions</span></div></li>}
+              {visibleAdmissions.length===0 && <li className="list-item"><div className="title"><span className="muted">No admissions</span></div></li>}
             </ul>
           </div>
 
           <div className="card" style={{ marginBottom: 12 }}>
             <h3 className="page-title">Transfers</h3>
             <ul className="list">
-              {transfers.map(t=> (
+              {visibleTransfers.map(t=> (
                 <li key={t.id} className="list-item">
-                  <div className="title"><span>Patient #{t.patientId}</span></div>
+                  <div className="title"><span>{nameById(patients, t.patientId)}</span></div>
                   <div className="meta"><span className="badge">{t.fromWard} → {t.toWard}</span><button className="link" onClick={()=>removeOne('transfers', t.id)}>Delete</button></div>
                 </li>
               ))}
-              {transfers.length===0 && <li className="list-item"><div className="title"><span className="muted">No transfers</span></div></li>}
+              {visibleTransfers.length===0 && <li className="list-item"><div className="title"><span className="muted">No transfers</span></div></li>}
             </ul>
           </div>
 
           <div className="card">
             <h3 className="page-title">Discharges</h3>
             <ul className="list">
-              {discharges.map(d=> (
+              {visibleDischarges.map(d=> (
                 <li key={d.id} className="list-item">
-                  <div className="title"><span>Patient #{d.patientId}</span></div>
+                  <div className="title"><span>{nameById(patients, d.patientId)}</span></div>
                   <div className="meta"><span className="badge">{d.summary || 'Summary'}</span><button className="link" onClick={()=>removeOne('discharges', d.id)}>Delete</button></div>
                 </li>
               ))}
-              {discharges.length===0 && <li className="list-item"><div className="title"><span className="muted">No discharges</span></div></li>}
+              {visibleDischarges.length===0 && <li className="list-item"><div className="title"><span className="muted">No discharges</span></div></li>}
             </ul>
           </div>
         </div>

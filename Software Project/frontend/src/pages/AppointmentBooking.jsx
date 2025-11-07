@@ -50,13 +50,18 @@ export default function AppointmentBooking() {
   }
   const slots = useMemo(()=> stepTimes(startTime, endTime, slotMin), [startTime, endTime, slotMin])
 
+  // Ignore orphaned appointments where patient was deleted
+  const validAppts = useMemo(() => appts.filter(a =>
+    patients.some(p => String(p.id) === String(a.patientId))
+  ), [appts, patients])
+
   // taken slots for selected date/doctor
-  const taken = useMemo(() => new Set(appts
+  const taken = useMemo(() => new Set(validAppts
     .filter(a => String(a.doctorId)===String(doctorId) && a.date===date)
-    .map(a => a.time)), [appts, doctorId, date])
+    .map(a => a.time)), [validAppts, doctorId, date])
 
   function isConflict(dId, d, t, ignoreId) {
-    return appts.some(a => String(a.doctorId)===String(dId) && a.date===d && a.time===t && a.id!==ignoreId)
+    return validAppts.some(a => String(a.doctorId)===String(dId) && a.date===d && a.time===t && a.id!==ignoreId)
   }
 
   async function book() {
@@ -86,7 +91,7 @@ export default function AppointmentBooking() {
 
   const toDate = (raw) => (raw ? new Date(raw) : null)
   const now = new Date()
-  const mine = appts.filter(a => String(a.doctorId)===String(doctorId))
+  const mine = validAppts.filter(a => String(a.doctorId)===String(doctorId))
   const upcoming = mine.filter(a => {
     const d = toDate(a.date); if (!d) return true
     return d >= new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -98,7 +103,7 @@ export default function AppointmentBooking() {
 
   const nameById = (list, id) => {
     const x = list.find(i => String(i.id)===String(id));
-    return x ? (x.name || x.fullName || `#${id}`) : `#${id}`
+    return x ? (x.name || x.fullName || `#${id}`) : '(Deleted patient)'
   }
 
   return (

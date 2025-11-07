@@ -7,10 +7,6 @@ export const client = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-
-
-
-
 // Generic CRUD helpers for HMS collections
 function collection(name) {
   return {

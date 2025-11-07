@@ -52,8 +52,9 @@ export default function PrescriptionsPage() {
 
   const patientName = (id) => {
     const p = patients.find(x => String(x.id) === String(id))
-    return p ? (p.name || `#${id}`) : `#${id}`
+    return p ? (p.name || p.fullName || `#${id}`) : '(Deleted patient)'
   }
+  const visibleItems = items.filter(r => patients.some(p => String(p.id) === String(r.patientId)))
 
   return (
     <div className="container">
@@ -116,7 +117,7 @@ export default function PrescriptionsPage() {
         <div>
           <h3>Prescription List</h3>
           <ul className="list">
-            {items.map(r => (
+            {visibleItems.map(r => (
               <li key={r.id} className="list-item">
                 <div className="title"><span>{patientName(r.patientId)}</span></div>
                 <div className="meta" style={{ flexWrap: 'wrap', gap: 6 }}>
@@ -131,7 +132,7 @@ export default function PrescriptionsPage() {
                 </div>
               </li>
             ))}
-            {items.length===0 && <li className="list-item"><div className="title"><span className="muted">No prescriptions</span></div></li>}
+            {visibleItems.length===0 && <li className="list-item"><div className="title"><span className="muted">No prescriptions</span></div></li>}
           </ul>
         </div>
       </div>

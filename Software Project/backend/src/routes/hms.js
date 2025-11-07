@@ -52,6 +52,35 @@ function crudFor(base, store) {
   })
 }
 
+// Cascade delete: when a patient is deleted, remove related records referencing patientId
+router.delete('/patients/:id', async (req, res) => {
+  const id = req.params.id
+  // Remove related documents that reference this patient
+  const relatedStores = [
+    appointments,
+    bills,
+    reports,
+    labs,
+    admissions,
+    transfers,
+    discharges,
+    prescriptions
+  ]
+  try {
+    // Best-effort parallel cleanup
+    await Promise.all(relatedStores.map(async (store) => {
+      const items = await store.list({ patientId: id })
+      if (!items.length) return
+      await Promise.all(items.map(i => store.remove(i.id)))
+    }))
+    const ok = await patients.remove(id)
+    if (!ok) return res.status(404).json({ error: 'Not found' })
+    res.status(204).send()
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to delete patient and related records' })
+  }
+})
+
 crudFor('patients', patients)
 crudFor('doctors', doctors)
 crudFor('appointments', appointments)

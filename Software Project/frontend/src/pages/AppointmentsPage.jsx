@@ -44,6 +44,11 @@ export default function AppointmentsPage() {
     const dt = toDateTime(a)
     return !dt || dt >= now
   })
+  // Past appointments: strictly before now
+  const past = items.filter(a => {
+    const dt = toDateTime(a)
+    return dt && dt < now
+  })
 
   return (
     <div className="container">
@@ -90,6 +95,24 @@ export default function AppointmentsPage() {
             ))}
             {upcoming.length === 0 && (
               <li className="list-item"><div className="title"><span className="muted">No upcoming appointments</span></div></li>
+            )}
+          </ul>
+
+          <h3 style={{ marginTop: 16 }}>Past Appointments</h3>
+          <ul className="list">
+            {past.map(a => (
+              <li key={a.id} className="list-item">
+                <div className="title"><span>{a.date} {a.time}</span></div>
+                <div className="meta">
+                  {a.patientId && <span className="badge">Patient #{a.patientId}</span>}
+                  {a.doctorId && <span className="badge">Doctor #{a.doctorId}</span>}
+                  {a.reason && <span className="badge">{a.reason}</span>}
+                  <button className="link" onClick={()=>remove(a.id)}>Cancel</button>
+                </div>
+              </li>
+            ))}
+            {past.length === 0 && (
+              <li className="list-item"><div className="title"><span className="muted">No past appointments</span></div></li>
             )}
           </ul>
         </div>

@@ -24,6 +24,12 @@ export default function BillsPage() {
   async function remove(id) { try { await Bills.remove(id); await load() } catch { setError('Failed to delete') } }
   async function patch(id, patch) { try { await Bills.patch(id, patch); await load() } catch { setError('Failed to update') } }
 
+  const nameById = (list, id) => {
+    const x = list.find(i => String(i.id) === String(id))
+    return x ? (x.name || x.fullName || x.title || `#${id}`) : '(Deleted patient)'
+  }
+  const visibleBills = items.filter(b => patients.some(p => String(p.id) === String(b.patientId)))
+
   return (
     <div className="container">
       <header className="header">
@@ -54,11 +60,11 @@ export default function BillsPage() {
         <div>
           <h3>Invoices</h3>
           <ul className="list">
-            {items.map(b => (
+            {visibleBills.map(b => (
               <li key={b.id} className="list-item">
                 <div className="title"><span>Bill #{b.id.slice(-6)}</span></div>
                 <div className="meta">
-                  {b.patientId && <span className="badge">Patient #{b.patientId}</span>}
+                  {b.patientId && <span className="badge">{nameById(patients, b.patientId)}</span>}
                   {b.total && <span className="badge">Total {b.total}</span>}
                   <span className="badge">{b.status}</span>
                   <button className="link" onClick={()=>patch(b.id,{ status: b.status === 'paid' ? 'unpaid' : 'paid' })}>Toggle Paid</button>

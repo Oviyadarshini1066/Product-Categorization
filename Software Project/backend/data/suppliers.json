@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "6Mg94czmQrDo",
+    "createdAt": "2025-11-07T09:50:27.777Z",
+    "name": "MedLife Distributors",
+    "contact": "1234567890",
+    "email": "you@gmail.com",
+    "address": "Chennai"
+  },
+  {
+    "id": "LofGLgNpyrLT",
+    "createdAt": "2025-11-07T09:51:10.461Z",
+    "name": "Apollo Pharma Supplies",
+    "contact": "5767731230",
+    "email": "Me@gmail.com",
+    "address": "Madurai"
+  }
+]

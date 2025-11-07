@@ -16,7 +16,7 @@
     "startTime": "09:00",
     "endTime": "17:00",
     "slotMinutes": 60,
-    "updatedAt": "2025-11-07T07:08:21.593Z"
+    "updatedAt": "2025-11-07T09:14:32.484Z"
   },
   {
     "id": "LYqPnsLt2zy7",
@@ -24,7 +24,11 @@
     "name": "Chitra K",
     "specialty": "Gynecologist",
     "contact": "897427457",
-    "licenseNo": "8362735"
+    "licenseNo": "8362735",
+    "startTime": "09:00",
+    "endTime": "17:00",
+    "slotMinutes": 60,
+    "updatedAt": "2025-11-07T09:21:42.812Z"
   },
   {
     "id": "9vzk0WGSBfUB",

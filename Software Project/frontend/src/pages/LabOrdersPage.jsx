@@ -29,6 +29,19 @@ export default function LabOrdersPage() {
   async function remove(id) { try { await Labs.remove(id); await load() } catch { setError('Failed to delete') } }
   async function patch(id, patch) { try { await Labs.patch(id, patch); await load() } catch { setError('Failed to update') } }
 
+  const patientName = (id) => {
+    const p = patients.find(x => String(x.id) === String(id))
+    return p ? (p.name || p.fullName || `#${id}`) : '(Deleted patient)'
+  }
+  const doctorName = (id) => {
+    const d = doctors.find(x => String(x.id) === String(id))
+    return d ? (d.name || d.fullName || `#${id}`) : '(Deleted doctor)'
+  }
+  const visibleItems = items.filter(o =>
+    patients.some(p => String(p.id) === String(o.patientId)) &&
+    doctors.some(d => String(d.id) === String(o.doctorId))
+  )
+
   return (
     <div className="container">
       <header className="header">
@@ -67,12 +80,12 @@ export default function LabOrdersPage() {
         <div>
           <h3>Orders</h3>
           <ul className="list">
-            {items.map(o => (
+            {visibleItems.map(o => (
               <li key={o.id} className="list-item">
                 <div className="title"><span>{o.test}</span></div>
                 <div className="meta">
-                  {o.patientId && <span className="badge">Patient #{o.patientId}</span>}
-                  {o.doctorId && <span className="badge">Doctor #{o.doctorId}</span>}
+                  {o.patientId && <span className="badge">{patientName(o.patientId)}</span>}
+                  {o.doctorId && <span className="badge">{doctorName(o.doctorId)}</span>}
                   {o.sampleId && <span className="badge">Sample {o.sampleId}</span>}
                   <span className="badge">{o.status}</span>
                   <button className="link" onClick={()=>patch(o.id,{ status: o.status==='ordered'?'collected':(o.status==='collected'?'reported':'ordered') })}>Next Status</button>
@@ -80,7 +93,7 @@ export default function LabOrdersPage() {
                 </div>
               </li>
             ))}
-            {items.length===0 && <li className="list-item"><div className="title"><span className="muted">No orders</span></div></li>}
+            {visibleItems.length===0 && <li className="list-item"><div className="title"><span className="muted">No orders</span></div></li>}
           </ul>
         </div>
       </div>

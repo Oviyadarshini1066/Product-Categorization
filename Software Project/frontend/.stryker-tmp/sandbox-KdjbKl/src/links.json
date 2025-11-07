@@ -1,0 +1,25 @@
+{
+  "Patient Services": [
+    { "label": "Patient Portal", "url": "https://example.com/patient-portal" },
+    { "label": "Appointment Booking", "url": "https://example.com/appointments" },
+    { "label": "Lab Reports", "url": "https://example.com/labs" }
+  ],
+  "Clinical": [
+    { "label": "Doctor Directory", "url": "https://example.com/doctors" },
+    { "label": "EHR/EMR Login", "url": "https://example.com/emr" },
+    { "label": "Radiology PACS", "url": "https://example.com/pacs" }
+  ],
+  "Administration": [
+    { "label": "Billing & Invoices", "url": "https://example.com/billing" },
+    { "label": "HR/Staff Portal", "url": "https://example.com/hr" },
+    { "label": "Inventory/Pharmacy", "url": "https://example.com/pharmacy" }
+  ],
+  "Analytics": [
+    { "label": "Dashboards", "url": "https://example.com/dashboards" },
+    { "label": "Reports", "url": "https://example.com/reports" }
+  ],
+  "Help": [
+    { "label": "SOPs / Policies", "url": "https://example.com/sops" },
+    { "label": "Support Desk", "url": "https://example.com/support" }
+  ]
+}
